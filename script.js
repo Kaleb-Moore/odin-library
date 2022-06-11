@@ -10,29 +10,32 @@ function Book(Title, Author, Pages, Read) {
     this.read = Read;
 };
 
-function addBookToLibrary() {
-    Book(title, author, pages, read);
-};
+const book1 = new Book("Well fuck", "Kaleb", "23", false);
+const book2 = new Book("Well fuck again", "Kaleb", "2334", true);
+const book3 = new Book("Well fuck off", "Kaleb Moore", "263", false);
+
+myLibrary = [book1, book2, book3]
 
 function addBooksToPage(){
-    myLibrary.map(book => {
-        if (book.read === true) {
-            `<div class="book">
-                <h2 class="book-title"> ${book.Title} </h2>
-                <h3 class="book-author"> ${book.Author} </h3>
-                <p class="book-pages"> ${book.Pages} Pages </p>
-                <input type="checkbox" checked>
-            </div>`
-        } else {
-            `<div class="book">
-                <h2 class="book-title"> ${book.Title} </h2>
-                <h3 class="book-author"> ${book.Author} </h3>
-                <p class="book-pages"> ${book.Pages} Pages </p>
-                <input type="checkbox">
-            </div>`
+    let addedBooks = myLibrary.map(book => (`
+    <div class="book">
+        <h1 class="book-title"> ${book.title} </h1>
+        <h2 class="book-author"> ${book.author} </h2>
+        <p class="book-pages"> ${book.pages} Pages </p>
+        <input type="checkbox" class="read-checked">
+        <button class="delete">Delete</button>
+    </div>
+    `)).join(' ');
+    books.innerHTML = addedBooks;
+};
+
+function isChecked() {
+    let checkbox = document.querySelectorAll(".read-checked");
+    for (let i = 0; i < myLibrary.length; i++){
+        if (myLibrary[i].read == true) {
+            checkbox[i].checked = true
         }
-        
-    })
+    }
 };
 
 addBtn.addEventListener("click", (e) => {
@@ -40,16 +43,20 @@ addBtn.addEventListener("click", (e) => {
     let title = document.querySelector(".title").value;
     let author = document.querySelector(".author").value;
     let pages = document.querySelector(".pages").value;
-    let read = document.querySelector(".read").value;
+    let read = document.querySelector(".read").checked;
 
     let haveRead = false;
     
-    if(read == 'on') {
+    if(read == true) {
         haveRead = true;
     }
 
     myLibrary.push(new Book(title, author, pages, haveRead));
 
     haveRead = false;
+    addBooksToPage();
+    isChecked();
 });
 
+addBooksToPage();
+isChecked();

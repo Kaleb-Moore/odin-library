@@ -39,7 +39,15 @@ function isChecked() {
         delBtn[i].addEventListener('click', (e) => {
             e.target.parentElement.remove();
         });
-        
+        checkbox[i].addEventListener('change', (e) => {
+            if (e.target.checked) {
+                myLibrary[i].read = true;
+                console.log("This is checked")
+            } else {
+                myLibrary[i].read = false;
+                console.log("this is unchecked")
+            }
+        });
     }
 };
 

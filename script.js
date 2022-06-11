@@ -30,11 +30,16 @@ function addBooksToPage(){
 };
 
 function isChecked() {
+    let delBtn = document.querySelectorAll(".delete");
     let checkbox = document.querySelectorAll(".read-checked");
     for (let i = 0; i < myLibrary.length; i++){
         if (myLibrary[i].read == true) {
             checkbox[i].checked = true
-        }
+        };
+        delBtn[i].addEventListener('click', (e) => {
+            e.target.parentElement.remove();
+        });
+        
     }
 };
 
@@ -57,6 +62,8 @@ addBtn.addEventListener("click", (e) => {
     addBooksToPage();
     isChecked();
 });
+
+
 
 addBooksToPage();
 isChecked();

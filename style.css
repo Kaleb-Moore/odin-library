@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+
+    gap: 15px;
+}
+
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.title-input, .author {
+    width: 250px;
+    height: auto;
+}
+
+.pages {
+    width: 100px;
+    height: auto;
+}
+
+.books {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.book {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    width: 200px;
+    height: 250px;
+    padding: 8px 12px;
+}
+
+.book-title, .book-author, .book-pages {
+    margin: 0;
+    align-self: center;
+}
+
+.read-toggle {
+    display: flex;
+    justify-content: center;
+}

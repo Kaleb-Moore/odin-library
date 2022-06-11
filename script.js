@@ -10,20 +10,17 @@ function Book(Title, Author, Pages, Read) {
     this.read = Read;
 };
 
-const book1 = new Book("Well fuck", "Kaleb", "23", false);
-const book2 = new Book("Well fuck again", "Kaleb", "2334", true);
-const book3 = new Book("Well fuck off", "Kaleb Moore", "263", false);
-
-myLibrary = [book1, book2, book3]
-
 function addBooksToPage(){
     let addedBooks = myLibrary.map(book => (`
     <div class="book">
-        <h1 class="book-title"> ${book.title} </h1>
-        <h2 class="book-author"> ${book.author} </h2>
+        <h1 class="book-title"> Title: ${book.title} </h1>
+        <h2 class="book-author"> Author: ${book.author} </h2>
         <p class="book-pages"> ${book.pages} Pages </p>
-        <input type="checkbox" class="read-checked">
-        <button class="delete">Delete</button>
+        <div class="read-toggle">
+            <label for="read" class="book-read">Read</label>
+            <input type="checkbox" class="read-checked" name="read">
+        </div>
+        <button class="delete">Delete Book</button>
     </div>
     `)).join(' ');
     books.innerHTML = addedBooks;
@@ -37,41 +34,51 @@ function isChecked() {
             checkbox[i].checked = true
         };
         delBtn[i].addEventListener('click', (e) => {
+            myLibrary.splice(e.target.parentNode.id, 1);
             e.target.parentElement.remove();
         });
         checkbox[i].addEventListener('change', (e) => {
             if (e.target.checked) {
                 myLibrary[i].read = true;
-                console.log("This is checked")
             } else {
                 myLibrary[i].read = false;
-                console.log("this is unchecked")
             }
         });
     }
 };
 
+function reIndex () {
+    let book = document.querySelectorAll(".book");
+    for (let i = 0; i < myLibrary.length; i++){
+        book[i].setAttribute("id", i);
+    }
+}
+
+
 addBtn.addEventListener("click", (e) => {
-    console.log('clicked');
-    let title = document.querySelector(".title").value;
-    let author = document.querySelector(".author").value;
-    let pages = document.querySelector(".pages").value;
-    let read = document.querySelector(".read").checked;
+    let title = document.querySelector(".title-input");
+    let author = document.querySelector(".author");
+    let pages = document.querySelector(".pages");
+    let read = document.querySelector(".read");
 
     let haveRead = false;
     
-    if(read == true) {
+    if(read.checked == true) {
         haveRead = true;
     }
 
-    myLibrary.push(new Book(title, author, pages, haveRead));
+    myLibrary.push(new Book(title.value, author.value, pages.value, haveRead));
 
     haveRead = false;
     addBooksToPage();
     isChecked();
+
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    read.checked = false;
 });
 
-
-
-addBooksToPage();
-isChecked();
+document.querySelector('body').addEventListener('click', (e) => {
+    reIndex();
+})
